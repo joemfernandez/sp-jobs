@@ -1,6 +1,6 @@
 export default function jobsTableConfig(dateFormatter) {
     return {
-        defaultOrder: [[1, 'desc']],
+        defaultOrder: [[1, 'desc'], [0, 'desc']],
         rowActionSelector: '.job-link.js-position',
         rowActionDataKey: 'id',
         columns: [
