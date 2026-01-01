@@ -1,0 +1,29 @@
+{
+  "name": "sp-jobs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "copy:vendor": "cpy --flat node_modules/jquery/dist/jquery.min.js vendor/ && cpy --flat node_modules/datatables.net-dt/js/dataTables.dataTables.min.js vendor/ && cpy --flat node_modules/datatables.net-dt/css/dataTables.dataTables.min.css vendor/",
+    "copy:polyfills": "cpy --flat node_modules/core-js-bundle/minified.js polyfills/core-js.min.js",
+    "build": "npm run copy:vendor && npm run copy:polyfills && rollup -c",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@rollup/plugin-babel": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "core-js-bundle": "^3.47.0",
+    "cpy-cli": "^6.0.0",
+    "datatables.net-dt": "^2.3.6",
+    "jest": "^30.2.0",
+    "jquery": "^3.7.1",
+    "rollup": "^4.54.0"
+  }
+}
