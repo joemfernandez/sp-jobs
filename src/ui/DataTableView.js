@@ -15,6 +15,9 @@ export default function DataTableView($, tableSelector, config) {
             lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
             language: {
                 emptyTable: 'There are no open job postings. Check back later.'
+            },
+            headerCallback: function (thead, data, start, end, display) {
+                $(thead).find('th').attr('scope', 'col');
             }
         });
 
