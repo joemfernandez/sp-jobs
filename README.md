@@ -128,6 +128,8 @@ They are:
 - Copied to `/vendor` and `/polyfills` using a script
 - Ignored by Git
 
+Some dependencies (e.g., Linkify) are bundled directly and do not require SharePoint uploads.
+
 ### Why?
 
 - Prevents repo bloat
