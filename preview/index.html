@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Jobs & Events UI – Local Preview</title>
+
+    <!--
+    Preview Page
+    ------------
+    This file is used for LOCAL DEVELOPMENT ONLY.
+
+    It serves as:
+    - A quick sanity check after cloning the repo
+    - A test harness for incremental UI changes
+    - A live example of reusing the same UI with different data
+
+    This page intentionally mirrors SharePoint CEWP behavior:
+    - Script-tag loading
+    - Global initializers
+    - No module loaders
+  -->
+
+    <!-- DataTables default styling -->
+    <link rel="stylesheet" href="../vendor/jquery.dataTables.min.css" />
+
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 1.5rem;
+        }
+
+        nav {
+            margin-bottom: 1rem;
+        }
+
+        nav button {
+            margin-right: 0.5rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+
+        section {
+            margin-top: 1rem;
+        }
+
+        table {
+            width: 100% !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Jobs & Events UI – Preview</h1>
+
+    <p>
+        Use the buttons below to switch between data sets.
+        Both views reuse the same UI components.
+    </p>
+
+    <nav>
+        <button data-view="jobs">Jobs</button>
+        <button data-view="events">Events</button>
+    </nav>
+
+    <!-- Jobs View -->
+    <section id="jobs-view">
+        <h2>Jobs</h2>
+        <table id="jobs-table"></table>
+        <div id="job-details"></div>
+    </section>
+
+    <!-- Events View -->
+    <section id="events-view" hidden>
+        <h2>Events</h2>
+        <table id="events-table"></table>
+        <div id="event-details"></div>
+    </section>
+
+    <!-- Polyfills (IE11-safe) -->
+    <script src="../polyfills/minified.js"></script>
+
+    <!-- Vendor libraries -->
+    <script src="../vendor/jquery.min.js"></script>
+    <script src="../vendor/jquery.dataTables.min.js"></script>
+
+    <!-- Application bundle -->
+    <script src="../dist/apps.bundle.min.js"></script>
+
+    <script>
+        /**
+         * Simple view toggling.
+         * This is intentionally minimal and framework-free.
+         */
+        document.querySelectorAll('nav button').forEach(button => {
+            button.addEventListener('click', function () {
+                const view = this.getAttribute('data-view');
+
+                document.getElementById('jobs-view').hidden = view !== 'jobs';
+                document.getElementById('events-view').hidden = view !== 'events';
+            });
+        });
+
+        /**
+         * Initialize both apps.
+         * Each app targets its own container and data source.
+         */
+        if (window.JobsApp && window.EventsApp) {
+            window.JobsApp.init({
+                dataUrl: '/mock-data/jobsData.json',
+                tableSelector: '#jobs-table',
+                detailsSelector: '#job-details'
+            });
+            window.EventsApp.init({
+                dataUrl: '/mock-data/eventsData.json',
+                tableSelector: '#events-table',
+                detailsSelector: '#event-details'
+            });
+        } else {
+            console.error(
+                'Apps not found. Ensure apps.bundle.min.js is built and loaded.'
+            );
+        }
+    </script>
+
+</body>
+
+</html>
