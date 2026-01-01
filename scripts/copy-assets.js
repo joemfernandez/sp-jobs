@@ -65,6 +65,21 @@ copy(
 );
 
 /**
+ * Linkify JavaScript plugin
+ * Used to find links in plain-text and convert them to HTML <a> tags.
+ */
+copy(
+    'node_modules/linkifyjs/dist/linkify.min.js',
+    'vendor'
+);
+
+copy(
+    'node_modules/linkify-html/dist/linkify-html.min.js',
+    'vendor'
+);
+
+
+/**
  * core-js bundle
  * Provides IE11 polyfills (Promise, Array.find, Array.includes, etc.)
  * Loaded before vendor and app scripts.
