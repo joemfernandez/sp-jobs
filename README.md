@@ -30,19 +30,26 @@ root
 ├── src
 │   ├── app
 │   │   ├── initJobsApp.js
-│   │   ├── initEventsApp.js
-│   │   └── bootstrap.js
-│   ├── data
-│   │   ├── JobsDataService.js
-│   │   └── EventsDataService.js
-│   ├── ui
-│   │   ├── DataTableView.js
-│   │   └── DetailsPanelView.js
+│   │   └── initEventsApp.js
 │   ├── config
 │   │   ├── jobsTableConfig.js
 │   │   └── eventsTableConfig.js
-│   └── utils
-│       └── normalizeJob.js
+│   ├── core
+│   │   ├── DateFormatter.js
+│   │   └── HttpClient.js
+│   ├── data
+│   │   ├── JobsDataService.js
+│   │   └── EventsDataService.js
+│   ├── templates
+│   │   ├── eventDetailsTemplate.js
+│   │   └── jobDetailsTemplate.js
+│   ├── ui
+│   │   ├── DataTableView.js
+│   │   └── DetailsPanelView.js
+│   └── index.js
+├── mock-data
+│   ├── eventsData.json
+│   └── jobsData.json
 ├── preview
 │   └── index.html
 ├── scripts
@@ -50,6 +57,8 @@ root
 ├── dist
 ├── vendor
 ├── polyfills
+├── tests
+├── babel.config.js
 ├── rollup.config.js
 ├── package.json
 └── README.md
