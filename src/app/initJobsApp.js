@@ -1,9 +1,10 @@
 import DataTableView from '../ui/DataTableView';
-import DetailsPanel from '../ui/DetailsPanel';
 import JobsDataService from '../data/JobsDataService';
 import jobsTableConfig from '../config/jobsTableConfig';
+import jobDetailsTemplate from '../templates/jobDetailsTemplate';
 import DateFormatter from '../core/DateFormatter';
 import HttpClient from '../core/HttpClient';
+import DetailsPanelView from '../ui/DetailsPanelView';
 
 export default function initJobsApp(config) {
     const $ = window.jQuery;
@@ -17,7 +18,7 @@ export default function initJobsApp(config) {
         jobsTableConfig(dateFormatter)
     );
 
-    const details = DetailsPanel($, config.detailsSelector);
+    const details = DetailsPanelView(config.detailsSelector);
 
     service.getAll().then(function (items) {
         table.init(items, function (item) {
@@ -26,7 +27,9 @@ export default function initJobsApp(config) {
                 return;
             }
 
-            details.show(item);
+            details.show(
+                jobDetailsTemplate(item)
+            )
         });
 
     });

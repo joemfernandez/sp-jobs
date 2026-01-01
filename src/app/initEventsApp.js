@@ -1,9 +1,10 @@
 import DataTableView from '../ui/DataTableView';
-import DetailsPanel from '../ui/DetailsPanel';
+import DetailsPanelView from '../ui/DetailsPanelView';
 import EventsDataService from '../data/EventsDataService';
 import eventsTableConfig from '../config/eventsTableConfig';
 import DateFormatter from '../core/DateFormatter';
 import HttpClient from '../core/HttpClient';
+import eventDetailsTemplate from '../templates/eventDetailsTemplate';
 
 export default function initEventsApp(config) {
     const $ = window.jQuery;
@@ -17,7 +18,7 @@ export default function initEventsApp(config) {
         eventsTableConfig(dateFormatter)
     );
 
-    const details = DetailsPanel($, config.detailsSelector);
+    const details = DetailsPanelView(config.detailsSelector);
 
     service.getAll().then(function (items) {
         table.init(items, function (item) {
@@ -26,7 +27,9 @@ export default function initEventsApp(config) {
                 return;
             }
 
-            details.show(item);
+            details.show(
+                eventDetailsTemplate(item)
+            );
         });
 
     });
