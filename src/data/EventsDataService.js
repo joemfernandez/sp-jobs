@@ -11,11 +11,21 @@ export default function EventsDataService(httpClient, url) {
         };
     }
 
+    function ensureArray(response) {
+        if (!Array.isArray(response)) {
+            throw new Error(
+                'EventsDataService.getAll: expected an array response'
+            );
+        }
+        return response;
+    }
+
+
     return {
         getAll: function () {
-            return httpClient.get(url).then(function (events) {
-                return events.map(normalize);
-            });
+            return httpClient.get(url)
+                .then(ensureArray)
+                .then(events => events.map(normalize));
         }
     };
 }

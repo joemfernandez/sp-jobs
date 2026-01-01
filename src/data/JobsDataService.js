@@ -14,11 +14,20 @@ export default function JobsDataService(httpClient, url) {
         };
     }
 
+    function ensureArray(response) {
+        if (!Array.isArray(response)) {
+            throw new Error(
+                'JobsDataService.getAll: expected an array response'
+            );
+        }
+        return response;
+    }
+
     return {
         getAll: function () {
-            return httpClient.get(url).then(function (jobs) {
-                return jobs.map(normalize);
-            });
+            return httpClient.get(url)
+                .then(ensureArray)
+                .then(jobs => jobs.map(normalize));
         }
     };
 }
