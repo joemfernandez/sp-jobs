@@ -2,8 +2,16 @@
  * Renders a job details panel.
  * This file intentionally contains formatting logic only.
  */
+
+import DateFormatter from '../core/DateFormatter';
+import linkifyHtml from 'linkify-html';
+
 export default function jobDetailsTemplate(job) {
-    return `
+  const dateFormatter = new DateFormatter();
+  const announcementDate = dateFormatter.formatDisplay(job.announcementDate);
+  const detailsHtml = linkifyHtml(job.details);
+
+  return `
     <div class="details-panel">
       <button
         class="details-close"
@@ -22,14 +30,14 @@ export default function jobDetailsTemplate(job) {
         <dd>${job.grade}</dd>
 
         <dt>Location</dt>
-        <dd>${job.location}</dd>
+        <dd>${job.commandLocation}</dd>
 
         <dt>Announcement Date</dt>
-        <dd>${job.announcementDate}</dd>
+        <dd>${announcementDate}</dd>
       </dl>
 
       <div class="details-body">
-        ${job.details}
+        ${detailsHtml}
       </div>
     </div>
   `;

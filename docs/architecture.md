@@ -215,3 +215,34 @@ modified, and reused years later over short-term convenience.
 
 The result is a small, composable UI framework that works reliably within
 legacy constraints while remaining adaptable to future needs.
+
+---
+
+### UI Component Naming
+
+Files in `src/ui` are intentionally suffixed with `View`:
+
+- `DataTableView`
+- `DetailsPanelView`
+
+This naming convention signals that these modules:
+
+- Contain **presentation logic only**
+- Do not fetch or transform data
+- Accept already-prepared inputs (HTML, config, callbacks)
+
+This helps enforce separation of concerns and makes UI components reusable across
+Jobs, Events, and future data types.
+
+---
+
+### Content Formatting in Templates
+
+Formatting concerns such as date display and link detection
+are handled at the template layer (e.g. Linkify usage).
+
+This keeps:
+
+- data services pure
+- UI components reusable
+- formatting decisions explicit and testable
