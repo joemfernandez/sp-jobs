@@ -137,9 +137,21 @@ This copies:
 - DataTables JS & CSS
 - core-js-bundle
 
+### DataTables Version Note
+
+This project intentionally uses **DataTables 1.13.x**.
+
+DataTables 2.x removes the legacy jQuery plugin API and is not compatible
+with IE11 or script-tag-based environments such as SharePoint CEWP.
+
+**Do not upgrade DataTables without revisiting these constraints.**
+
 ---
 
 ## 🏗️ Build
+
+All build and asset-copy tools are declared in devDependencies.
+No global installs are required.
 
 ```bash
 npm install
