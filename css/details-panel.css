@@ -1,0 +1,10 @@
+/* 
+Details panel modal behavior
+----------------------------
+Applied to <body> while the details panel is open
+to prevent background scrolling.
+This is intentionally scoped to the DetailsPanelView.
+*/
+body.modal-open {
+    overflow: hidden;
+}

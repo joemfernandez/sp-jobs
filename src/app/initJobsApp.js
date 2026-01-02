@@ -8,25 +8,26 @@ import DetailsPanelView from '../ui/DetailsPanelView';
 import StatusRegionView from '../ui/StatusRegionView';
 
 export default function initJobsApp(config) {
-    const $ = window.jQuery;
-    const http = HttpClient($);
-    const jobsService = JobsDataService(http, config.dataUrl);
-    const dateFormatter = DateFormatter(config.locale);
+    var $ = window.jQuery;
 
-    const status = StatusRegionView($, config.statusSelector);
+    var http = HttpClient($);
+    var jobsService = JobsDataService(http, config.dataUrl);
+    var dateFormatter = DateFormatter(config.locale);
 
-    const table = DataTableView(
+    var status = StatusRegionView($, config.statusSelector);
+
+    var table = DataTableView(
         $,
         config.tableSelector,
         jobsTableConfig(dateFormatter)
     );
 
-    const detailsPanel = DetailsPanelView(config.detailsSelector);
+    var detailsPanel = DetailsPanelView(config.detailsSelector);
 
     status.setLoading();
 
     jobsService.getAll()
-        .then(data => {
+        .then(function (data) {
             table.init(data, function (item, triggerEl) {
                 if (!item || !item.id) {
                     console.warn('Row missing id:', item);
@@ -36,12 +37,12 @@ export default function initJobsApp(config) {
                 detailsPanel.show(
                     jobDetailsTemplate(item),
                     triggerEl
-                )
+                );
             });
+
             status.setLoaded();
         })
-        .catch(() => {
+        .catch(function () {
             status.setError();
         });
-
 }
