@@ -23,7 +23,7 @@ export default function jobsTableConfig(dateFormatter) {
                     return (
                         '<button type="button" class="job-link js-position" data-id="' +
                         row.id +
-                        '">' +
+                        '" aria-label="View details for ' + data + '">' +
                         data +
                         '</button>'
                     );

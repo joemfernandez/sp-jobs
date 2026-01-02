@@ -83,6 +83,13 @@ Domain-specific behavior lives in:
 This allows the same UI to be reused for new data types with minimal effort
 and without forking components.
 
+#### Table Structure Contract
+
+When using static HTML `<thead>` markup for accessibility, the number and order
+of `<th>` elements must match teh column definition provided to DataTables via configuration.
+
+This ensures correct header association, sorting behavior, and screen reader output.
+
 ---
 
 ### 3. Data Services Own External Knowledge

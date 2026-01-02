@@ -11,7 +11,7 @@ export default function eventsTableConfig(dateFormatter) {
                     return (
                         '<button class="js-title" data-id="' +
                         row.id +
-                        '">' +
+                        '" aria-label="' + data + '">' +
                         data +
                         '</button>'
                     );

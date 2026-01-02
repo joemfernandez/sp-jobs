@@ -5,12 +5,15 @@ import jobDetailsTemplate from '../templates/jobDetailsTemplate';
 import DateFormatter from '../core/DateFormatter';
 import HttpClient from '../core/HttpClient';
 import DetailsPanelView from '../ui/DetailsPanelView';
+import StatusRegionView from '../ui/StatusRegionView';
 
 export default function initJobsApp(config) {
     const $ = window.jQuery;
     const http = HttpClient($);
     const service = JobsDataService(http, config.dataUrl);
     const dateFormatter = DateFormatter(config.locale);
+
+    const status = StatusRegionView($, config.statusSelector);
 
     const table = DataTableView(
         $,
@@ -20,17 +23,24 @@ export default function initJobsApp(config) {
 
     const details = DetailsPanelView(config.detailsSelector);
 
-    service.getAll().then(function (items) {
-        table.init(items, function (item) {
-            if (!item || !item.id) {
-                console.warn('Row missing id:', item);
-                return;
-            }
+    status.setLoaded();
 
-            details.show(
-                jobDetailsTemplate(item)
-            )
+    service.getAll()
+        .then(data => {
+            table.init(data, (item) => {
+                if (!item || !item.id) {
+                    console.warn('Row missing id:', item);
+                    return;
+                }
+
+                details.show(
+                    jobDetailsTemplate(item)
+                )
+            });
+            status.setLoaded();
+        })
+        .catch(() => {
+            status.setError();
         });
 
-    });
 }
