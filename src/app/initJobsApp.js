@@ -10,7 +10,7 @@ import StatusRegionView from '../ui/StatusRegionView';
 export default function initJobsApp(config) {
     const $ = window.jQuery;
     const http = HttpClient($);
-    const service = JobsDataService(http, config.dataUrl);
+    const jobsService = JobsDataService(http, config.dataUrl);
     const dateFormatter = DateFormatter(config.locale);
 
     const status = StatusRegionView($, config.statusSelector);
@@ -21,20 +21,21 @@ export default function initJobsApp(config) {
         jobsTableConfig(dateFormatter)
     );
 
-    const details = DetailsPanelView(config.detailsSelector);
+    const detailsPanel = DetailsPanelView(config.detailsSelector);
 
-    status.setLoaded();
+    status.setLoading();
 
-    service.getAll()
+    jobsService.getAll()
         .then(data => {
-            table.init(data, (item) => {
+            table.init(data, function (item, triggerEl) {
                 if (!item || !item.id) {
                     console.warn('Row missing id:', item);
                     return;
                 }
 
-                details.show(
-                    jobDetailsTemplate(item)
+                detailsPanel.show(
+                    jobDetailsTemplate(item),
+                    triggerEl
                 )
             });
             status.setLoaded();

@@ -1,5 +1,5 @@
 export default function eventDetailsTemplate(event) {
-    return `
+  return `
     <div class="details-panel">
       <button
         class="details-close"
@@ -8,7 +8,7 @@ export default function eventDetailsTemplate(event) {
         ✕
       </button>
 
-      <h2>${event.title}</h2>
+      <h2 id="details-panel-heading">${event.title}</h2>
 
       <dl>
         <dt>Date</dt>

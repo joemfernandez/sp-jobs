@@ -10,7 +10,7 @@ import StatusRegionView from '../ui/StatusRegionView';
 export default function initEventsApp(config) {
     const $ = window.jQuery;
     const http = HttpClient($);
-    const service = EventsDataService(http, config.dataUrl);
+    const eventsService = EventsDataService(http, config.dataUrl);
     const dateFormatter = DateFormatter(config.locale);
 
     const status = StatusRegionView($, config.statusSelector);
@@ -21,18 +21,21 @@ export default function initEventsApp(config) {
         eventsTableConfig(dateFormatter)
     );
 
-    const details = DetailsPanelView(config.detailsSelector);
+    const detailsPanel = DetailsPanelView(config.detailsSelector);
 
-    service.getAll()
+    status.setLoading();
+
+    eventsService.getAll()
         .then(data => {
-            table.init(data, (item) => {
+            table.init(data, function (item, triggerEl) {
                 if (!item || !item.id) {
                     console.warn('Row missing id:', item);
                     return;
                 }
 
-                details.show(
-                    eventDetailsTemplate(item)
+                detailsPanel.show(
+                    eventDetailsTemplate(item),
+                    triggerEl
                 )
             });
             status.setLoaded();

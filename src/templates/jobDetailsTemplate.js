@@ -20,7 +20,7 @@ export default function jobDetailsTemplate(job) {
         ✕
       </button>
 
-      <h2>${job.position}</h2>
+      <h2 id="details-panel-heading">${job.position}</h2>
 
       <dl>
         <dt>Notice Number</dt>

@@ -22,7 +22,7 @@ export default function DataTableView($, tableSelector, config) {
         });
 
         if (config.rowActionSelector) {
-            $(tableSelector).on('click', config.rowActionSelector, function () {
+            $(tableSelector).on('click', config.rowActionSelector, function (e) {
                 const $row = $(this).closest('tr');
                 const rowData = dataTable.row($row).data();
 
@@ -31,7 +31,7 @@ export default function DataTableView($, tableSelector, config) {
                     return;
                 }
 
-                onRowAction(rowData);
+                onRowAction(rowData, e.currentTarget);
             });
         }
 
