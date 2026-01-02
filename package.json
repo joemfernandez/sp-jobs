@@ -6,6 +6,7 @@
   "scripts": {
     "copy-assets": "node scripts/copy-assets.js",
     "build": "rollup -c && npm run copy-assets",
+    "build:preview": "cross-env BUILD=preview rollup -c && npm run copy-assets",
     "test": "jest"
   },
   "keywords": [],
@@ -20,6 +21,7 @@
     "@rollup/plugin-terser": "^0.4.4",
     "copyfiles": "^2.4.1",
     "core-js-bundle": "^3.47.0",
+    "cross-env": "^10.1.0",
     "datatables.net": "1.13.8",
     "datatables.net-dt": "1.13.8",
     "jest": "^30.2.0",
