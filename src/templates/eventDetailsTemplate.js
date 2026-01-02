@@ -8,7 +8,7 @@ export default function eventDetailsTemplate(event) {
         ✕
       </button>
 
-      <h2 id="details-panel-heading">${event.title}</h2>
+      <h2 id="details-panel-heading">Event details for ${event.title}</h2>
 
       <dl>
         <dt>Date</dt>

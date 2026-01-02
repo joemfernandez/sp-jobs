@@ -46,7 +46,8 @@ export default function DetailsPanelView(panelSelector) {
         $panel
             .attr({
                 role: 'dialog',
-                'aria-modal': 'true'
+                'aria-modal': 'true',
+                'aria-labeledby': 'details-panel-heading'
             })
             .html(html)
             .show();
