@@ -44,6 +44,7 @@ root
 │   │   ├── eventDetailsTemplate.js
 │   │   └── jobDetailsTemplate.js
 │   ├── ui
+│   │   ├── StatusRegionView.js
 │   │   ├── DataTableView.js
 │   │   └── DetailsPanelView.js
 │   └── index.js
@@ -54,6 +55,7 @@ root
 │   └── index.html
 ├── scripts
 │   └── copy-assets.js
+├── css
 ├── dist
 ├── vendor
 ├── polyfills
