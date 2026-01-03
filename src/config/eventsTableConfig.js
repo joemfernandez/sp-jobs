@@ -1,6 +1,6 @@
 export default function eventsTableConfig(dateFormatter) {
     return {
-        defaultOrder: [[1, 'asc']],
+        defaultOrder: [[1, 'desc']],
         rowActionSelector: '.js-title',
         rowActionDataKey: 'id',
         columns: [
