@@ -1,9 +1,44 @@
 [
     {
         "id": 42,
-        "title": "Town Hall",
+        "title": "April Town Hall",
         "event_date": "2025-04-20",
         "location": "Main Auditorium",
         "description": "<p>All hands meeting</p>"
+    },
+    {
+        "id": 43,
+        "title": "New Hire Onboarding",
+        "event_date": "2026-01-15",
+        "location": "Main Conference Room",
+        "description": "<p>HR staff will walk new December and January hires through onboarding paperwork</p>"
+    },
+    {
+        "id": 44,
+        "title": "Board of Director's Meeting",
+        "event_date": "2025-12-20",
+        "location": "Executive Conference Room",
+        "description": "<p>End of year closeout</p>"
+    },
+    {
+        "id": 45,
+        "title": "July Town Hall",
+        "event_date": "2025-07-15",
+        "location": "Main Auditorium",
+        "description": "<p>All hands meeting</p>"
+    },
+    {
+        "id": 46,
+        "title": "October Town Hall",
+        "event_date": "2025-10-19",
+        "location": "Main Auditorium",
+        "description": "<p>All hands meeting</p>"
+    },
+    {
+        "id": 42,
+        "title": "Holiday Gathering",
+        "event_date": "2025-12-10",
+        "location": "Main Auditorium",
+        "description": "<p>Holiday cheer and team building</p>"
     }
 ]
