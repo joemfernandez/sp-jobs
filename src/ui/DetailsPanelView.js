@@ -6,6 +6,8 @@
 // - Restore focus to trigger on close
 
 export default function DetailsPanelView(panelSelector) {
+    var $ = window.jQuery;
+    var $backdrop = $('#modal-backdrop');
     var $panel = window.jQuery(panelSelector);
     var lastTrigger = null;
 
@@ -41,13 +43,17 @@ export default function DetailsPanelView(panelSelector) {
     }
 
     function show(html, triggerEl) {
+        // Show backdrop (single global instance)
+        if ($backdrop.length) {
+            $backdrop.show();
+        }
         lastTrigger = triggerEl || document.activeElement;
 
         $panel
             .attr({
                 role: 'dialog',
                 'aria-modal': 'true',
-                'aria-labeledby': 'details-panel-heading'
+                'aria-labelledby': 'details-panel-heading'
             })
             .html(html)
             .show();
@@ -65,6 +71,10 @@ export default function DetailsPanelView(panelSelector) {
     }
 
     function hide() {
+        // Hide backdrop
+        if ($backdrop.length) {
+            $backdrop.hide();
+        }
         $panel
             .off('keydown', onKeydown)
             .removeAttr('role aria-modal tabindex')
@@ -80,6 +90,11 @@ export default function DetailsPanelView(panelSelector) {
 
     // Delegate close button
     $panel.on('click', '.details-close', hide);
+
+    // Clicking the backdrop closes the modal
+    if ($backdrop.length) {
+        $backdrop.on('click', hide);
+    }
 
     return {
         show: show,
