@@ -17,6 +17,12 @@
  * must be revisited.
  */
 export default function ModalController({ modalElement, onClose }) {
+  if (!modalElement) {
+    throw new Error(
+      'ModalController requires a modalElement DOM node'
+    );
+  }
+
   let backdrop;
   let invoker;
   let keydownHandler;

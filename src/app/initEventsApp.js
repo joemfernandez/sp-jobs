@@ -46,7 +46,7 @@ export default function initEventsApp(config) {
     // ---- Modal + Details Panel ----
     var $panel = $(config.detailsSelector);
     var modal = new ModalController({
-        panelSelector: $panel[0]
+        modalElement: $panel[0]
     });
 
     var detailsPanel = DetailsPanelView(
