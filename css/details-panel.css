@@ -1,6 +1,12 @@
+/* Details panel component */
 
+.details-panel {
+  display: none;
+}
 
+/* Panel behavior *when used as a modal* */
 .modal-open .details-panel {
+  display: block;
   position: fixed;
   top: 0;
   right: 0;

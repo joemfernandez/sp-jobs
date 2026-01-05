@@ -1,5 +1,17 @@
+/* Modal infrastructure */
+
+/* 
+Applied by ModalController
+----------------------------
+Applied to <body> while the details panel is open
+to prevent background scrolling.
+*/
+body.modal-open {
+    overflow: hidden;
+}
+
 /*
-  Modal infrastructure
+  Injected by ModalController
   --------------------
   Page-level backdrop used by modal dialogs to block background interaction.
   Not specific to any single component.
@@ -11,12 +23,3 @@
   z-index: 999;
 }
 
-/* 
-Details panel modal behavior
-----------------------------
-Applied to <body> while the details panel is open
-to prevent background scrolling.
-*/
-body.modal-open {
-    overflow: hidden;
-}
