@@ -44,8 +44,9 @@ export default function initJobsApp(config) {
     );
 
     // ---- Modal + Details Panel ----
+    var $panel = $(config.detailsSelector);
     var modal = new ModalController({
-        panelSelector: config.detailsSelector
+        panelSelector: $panel[0]
     });
 
     var detailsPanel = DetailsPanelView(
