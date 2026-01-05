@@ -1,50 +1,53 @@
 /**
- * DetailsPanelView
+ * UI component: DetailsPanelView
  *
  * RESPONSIBILITIES:
- * - Render details content
- * - Own layout and visibility
- * - Handle close button clicks
+ * - Render details content into a designated panel element
+ * - Handle panel visibility and close button interactions
+ * - Delegate all modal behavior (backdrop, focus, keyboard) to the injected ModalController
  *
  * NON-RESPONSIBILITIES:
- * - Focus trapping
- * - Global keyboard handling (Escape, Tab)
- * - Backdrop creation/removal
- * - Disabling background interaction
+ * - Managing backdrop creation/removal
+ * - Focus trapping or keyboard event handling outside the panel content
+ * - Creating or configuring ModalController instances
  *
- * NOTE:
- * Modal behavior should be handled via ModalController.
+ * NOTES:
+ * - Expects jQuery ($) to be passed in
+ * - Expects an instance of ModalController to be passed in
+ * - Keeping this focused on rendering and delegation simplifies unit testing
  */
-import ModalController from './ModalController';
+export default function DetailsPanelView(panelSelector, $, modal) {
+    // Validate dependencies early
+    if (typeof $ !== 'function') {
+        throw new Error('DetailsPanelView requires a jQuery instance ($).');
+    }
+    if (!modal || typeof modal.activate !== 'function' || typeof modal.deactivate !== 'function') {
+        throw new Error('DetailsPanelView requires a ModalController instance.');
+    }
 
-export default function DetailsPanelView(panelSelector, $) {
     var $panel = $(panelSelector);
 
-    // ModalController instance
-    var modal = new ModalController({
-        modalElement: $panel[0],
-        onClose: hide
-    });
-
     function show(html, triggerEl) {
+        // Render content into the panel
         $panel.html(html).show();
 
-        // ModalController manages focus, backdrop, and keyboard behavior
+        // Let the modal instance handle everything else
         modal.activate(triggerEl);
     }
 
     function hide() {
+        // Immediately hide the panel
         $panel.hide();
 
-        // Deactivate modal behavior
+        // Delegate modal cleanup (backdrop, focus, keyboard)
         modal.deactivate();
     }
 
-    // Delegate close button
+    // Delegate close button inside panel
     $panel.on('click', '.details-close', hide);
 
     return {
-        show: show,
-        hide: hide
+        show,
+        hide
     };
 }
