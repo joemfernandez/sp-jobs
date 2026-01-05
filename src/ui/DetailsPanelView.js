@@ -37,9 +37,6 @@ export default function DetailsPanelView(panelSelector, $, modal) {
     }
 
     var $panel = $(panelSelector);
-    if (!$panel.find('.details-close').length) {
-        console.warn('DetailsPanelView: no .details-close element found');
-    }
 
     function show(html, triggerEl) {
         // Render content into the panel
@@ -51,7 +48,7 @@ export default function DetailsPanelView(panelSelector, $, modal) {
 
     function hide() {
         // Immediately hide the panel
-        $panel.hide();
+        $panel.hide().empty();
 
         // Delegate modal cleanup (backdrop, focus, keyboard)
         modal.deactivate();
