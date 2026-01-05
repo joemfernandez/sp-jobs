@@ -1,4 +1,4 @@
-import DateFormatter from '../src/core/DateFormatter';
+import DateFormatter from '../DateFormatter';
 
 test('formats date for display', () => {
     const df = DateFormatter('en-US');

@@ -1,4 +1,4 @@
-import JobsDataService from '../src/data/JobsDataService';
+import JobsDataService from '../JobsDataService';
 
 test('returns jobs from http client', async () => {
     const fakeJobs = [{ id: 1, position: 'Developer' }];

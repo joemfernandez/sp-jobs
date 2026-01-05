@@ -80,6 +80,7 @@ export default function ModalController({ modalElement, onClose }) {
   }
 
   function restoreAria() {
+    modalElement.removeAttribute('role');
     modalElement.removeAttribute('aria-modal');
     document.body.classList.remove('modal-open');
   }

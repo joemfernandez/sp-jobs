@@ -60,7 +60,6 @@ root
 ├── dist
 ├── vendor
 ├── polyfills
-├── tests
 ├── babel.config.js
 ├── rollup.config.js
 ├── package.json
