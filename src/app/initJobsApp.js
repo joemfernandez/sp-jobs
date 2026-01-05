@@ -1,3 +1,20 @@
+// App initializer: initJobsApp
+//
+// Responsibilities:
+// - Bootstrap the jobs application
+// - Wire together data, table view, details panel, and modal behavior
+// - Translate user interactions into high-level application actions
+//
+// Non-responsibilities:
+// - Rendering table rows or job details markup
+// - Managing modal focus, backdrop, or accessibility behavior
+// - Direct DOM manipulation beyond initial wiring
+//
+// Notes:
+// - Acts as the composition root for UI modules
+// - Depends on configuration passed in from preview/index.html
+// - Should remain thin and orchestration-focused
+
 import DataTableView from '../ui/DataTableView';
 import JobsDataService from '../data/JobsDataService';
 import jobsTableConfig from '../config/jobsTableConfig';
@@ -6,14 +23,18 @@ import DateFormatter from '../core/DateFormatter';
 import HttpClient from '../core/HttpClient';
 import DetailsPanelView from '../ui/DetailsPanelView';
 import StatusRegionView from '../ui/StatusRegionView';
+import ModalController from '../ui/ModalController';
 
 export default function initJobsApp(config) {
+    // ---- Core dependency ----
     var $ = window.jQuery;
 
+    // ---- Infrastructure ----
     var http = HttpClient($);
     var jobsService = JobsDataService(http, config.dataUrl);
     var dateFormatter = DateFormatter(config.locale);
 
+    // ---- UI Components ----
     var status = StatusRegionView($, config.statusSelector);
 
     var table = DataTableView(
@@ -22,8 +43,18 @@ export default function initJobsApp(config) {
         jobsTableConfig(dateFormatter)
     );
 
-    var detailsPanel = DetailsPanelView(config.detailsSelector);
+    // ---- Modal + Details Panel ----
+    var modal = new ModalController({
+        panelSelector: config.detailsSelector
+    });
 
+    var detailsPanel = DetailsPanelView(
+        config.detailsSelector,
+        $,
+        modal
+    );
+
+    // ---- App startup ----
     status.setLoading();
 
     jobsService.getAll()
