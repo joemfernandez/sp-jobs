@@ -1,32 +1,64 @@
+// App initializer: initEventsApp
+//
+// Responsibilities:
+// - Bootstrap the events application
+// - Wire together data, table view, details panel, and modal behavior
+// - Translate user interactions into high-level application actions
+//
+// Non-responsibilities:
+// - Rendering table rows or event details markup
+// - Managing modal focus, backdrop, or accessibility behavior
+// - Direct DOM manipulation beyond initial wiring
+//
+// Notes:
+// - Acts as the composition root for UI modules
+// - Depends on configuration passed in from preview/index.html
+// - Should remain thin and orchestration-focused
+
 import DataTableView from '../ui/DataTableView';
-import DetailsPanelView from '../ui/DetailsPanelView';
 import EventsDataService from '../data/EventsDataService';
 import eventsTableConfig from '../config/eventsTableConfig';
+import eventDetailsTemplate from '../templates/eventDetailsTemplate';
 import DateFormatter from '../core/DateFormatter';
 import HttpClient from '../core/HttpClient';
-import eventDetailsTemplate from '../templates/eventDetailsTemplate';
+import DetailsPanelView from '../ui/DetailsPanelView';
 import StatusRegionView from '../ui/StatusRegionView';
+import ModalController from '../ui/ModalController';
 
 export default function initEventsApp(config) {
-    const $ = window.jQuery;
-    const http = HttpClient($);
-    const eventsService = EventsDataService(http, config.dataUrl);
-    const dateFormatter = DateFormatter(config.locale);
+    // ---- Core dependency ----
+    var $ = window.jQuery;
 
-    const status = StatusRegionView($, config.statusSelector);
+    // ---- Infrastructure ----
+    var http = HttpClient($);
+    var eventsService = EventsDataService(http, config.dataUrl);
+    var dateFormatter = DateFormatter(config.locale);
 
-    const table = DataTableView(
+    // ---- UI Components ----
+    var status = StatusRegionView($, config.statusSelector);
+
+    var table = DataTableView(
         $,
         config.tableSelector,
         eventsTableConfig(dateFormatter)
     );
 
-    const detailsPanel = DetailsPanelView(config.detailsSelector);
+    // ---- Modal + Details Panel ----
+    var modal = new ModalController({
+        panelSelector: config.detailsSelector
+    });
 
+    var detailsPanel = DetailsPanelView(
+        config.detailsSelector,
+        $,
+        modal
+    );
+
+    // ---- App startup ----
     status.setLoading();
 
     eventsService.getAll()
-        .then(data => {
+        .then(function (data) {
             table.init(data, function (item, triggerEl) {
                 if (!item || !item.id) {
                     console.warn('Row missing id:', item);
@@ -36,11 +68,12 @@ export default function initEventsApp(config) {
                 detailsPanel.show(
                     eventDetailsTemplate(item),
                     triggerEl
-                )
+                );
             });
+
             status.setLoaded();
         })
-        .catch(() => {
+        .catch(function () {
             status.setError();
         });
 }
