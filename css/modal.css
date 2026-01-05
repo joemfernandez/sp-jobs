@@ -1,4 +1,13 @@
-/* Modal infrastructure */
+/*
+ * Modal infrastructure
+ *
+ * - Global modal state
+ * - Backdrop styling
+ * - No component-specific layout rules
+ *
+ * Used by ModalController
+ */
+
 
 /* 
 Applied by ModalController

@@ -30,7 +30,7 @@ export default function DetailsPanelView(panelSelector) {
     function show(html, triggerEl) {
         $panel.html(html).show();
 
-        // Activate modal behavior (focus, backdrop, Escape)
+        // ModalController manages focus, backdrop, and keyboard behavior
         modal.activate(triggerEl);
     }
 
