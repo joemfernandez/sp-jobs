@@ -17,8 +17,7 @@
  */
 import ModalController from './ModalController';
 
-export default function DetailsPanelView(panelSelector) {
-    var $ = window.jQuery;
+export default function DetailsPanelView(panelSelector, $) {
     var $panel = $(panelSelector);
 
     // ModalController instance
