@@ -1,0 +1,22 @@
+/*
+  Modal infrastructure
+  --------------------
+  Page-level backdrop used by modal dialogs to block background interaction.
+  Not specific to any single component.
+*/
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* 
+Details panel modal behavior
+----------------------------
+Applied to <body> while the details panel is open
+to prevent background scrolling.
+*/
+body.modal-open {
+    overflow: hidden;
+}
