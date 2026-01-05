@@ -262,16 +262,43 @@ long-lived, low-churn nature of SharePoint environments.
 
 ## Testing Philosophy
 
-Testing focuses on:
+This project favors **behavioral, responsibility-focused testing** over exhaustive DOM or browser simulation.
 
-- Data normalization logic
-- Data services
-- Configuration-driven behavior
+### Guiding Principles
 
-UI rendering logic is kept simple enough that heavy DOM testing is unnecessary.
+1. **Test responsibilities, not implementations**
+   Tests should verify that a module fulfills its documented responsibilities and honors its contracts with collaborators. They should avoid asserting internal implementation details that may change during refactors.
 
-By normalizing data early and isolating responsibilities, most logic can be
-tested without SharePoint, the DOM, or network access.
+2. **Prefer unit-level behavioral tests**
+   Most tests are written at the unit level, using dependency injection and mocks/spies to verify interactions between modules (e.g., a view delegating to a controller). This keeps tests fast, readable, and resilient to change.
+
+3. **Avoid brittle browser simulation**
+   jsdom is not a full browser. Tests should not rely on:
+
+   - Exact focus order or `document.activeElement` behavior
+   - CSS layout, z-index, or visual stacking
+   - Native browser keyboard navigation quirks
+     These behaviors are better verified through manual testing or QA workflows.
+
+4. **Accessibility is verified at multiple levels**
+
+   - **Code-level tests** verify that accessibility-related behaviors are _triggered_ (e.g., Escape closes a modal, modal activation/deactivation occurs).
+   - **Manual testing** is used to validate real-world keyboard navigation, focus trapping, and screen reader behavior in an actual browser.
+
+5. **Explicit dependency injection improves testability**
+   Modules are designed to accept their dependencies (e.g., jQuery instances, controllers) rather than relying on globals. This enables isolation in tests and reduces hidden coupling.
+
+6. **Integration tests are used sparingly**
+   Light integration or “sanity” tests may be added when they provide clear value, but deep end-to-end or DOM-heavy integration tests are avoided unless the complexity justifies them.
+
+### Practical Outcome
+
+This approach:
+
+- Keeps tests aligned with the project’s architecture
+- Reduces test brittleness during refactors
+- Encourages clear module boundaries
+- Balances automated testing with practical manual verification
 
 ---
 
