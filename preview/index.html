@@ -23,6 +23,7 @@
 
     <!-- App base styling -->
     <link rel="stylesheet" href="../css/app-base.css" />
+    <link rel="stylesheet" href="../css/details-panel.css" />
 
     <!-- DataTables default styling -->
     <link rel="stylesheet" href="../vendor/jquery.dataTables.min.css" />
@@ -55,10 +56,6 @@
 
 <body>
 
-    <!-- Modal backdrop (shared, page-level) -->
-    <div id="modal-backdrop" hidden></div>
-
-
     <h1>Jobs & Events UI – Preview</h1>
 
     <p>
@@ -87,7 +84,7 @@
                 </tr>
             </thead>
         </table>
-        <div id="job-details"></div>
+        <div id="job-details" class="details-panel"></div>
     </section>
 
     <!-- Events View -->
@@ -104,7 +101,7 @@
                 </tr>
             </thead>
         </table>
-        <div id="event-details"></div>
+        <div id="event-details" class="details-panel"></div>
     </section>
 
     <!-- Polyfills (IE11-safe) -->

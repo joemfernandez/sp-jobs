@@ -21,6 +21,15 @@ export default function ModalController({ modalElement, onClose }) {
   let invoker;
   let keydownHandler;
 
+  // Helper: find all visible focusable elements within modal
+  function getFocusableElements() {
+    return Array.from(
+      modalElement.querySelectorAll(
+        'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter((el) => el.offsetParent !== null);
+  }
+
   function activate(invokerElement) {
     invoker = invokerElement || document.activeElement;
 
@@ -42,52 +51,12 @@ export default function ModalController({ modalElement, onClose }) {
     }
   }
 
+  // Backdrop creation / click to close
   function createBackdrop() {
     backdrop = document.createElement('div');
     backdrop.className = 'modal-backdrop';
     backdrop.addEventListener('click', deactivate);
     document.body.appendChild(backdrop);
-  }
-
-  function registerKeyboard() {
-    keydownHandler = (e) => {
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        deactivate();
-      }
-    };
-
-    document.addEventListener('keydown', keydownHandler);
-  }
-
-  function removeKeyboard() {
-    document.removeEventListener('keydown', keydownHandler);
-  }
-
-  function applyAria() {
-    modalElement.setAttribute('role', 'dialog');
-    modalElement.setAttribute('aria-modal', 'true');
-  }
-
-  function restoreAria() {
-    modalElement.removeAttribute('aria-modal');
-  }
-
-  function focusFirstElement() {
-    modalElement.setAttribute('tabindex', '-1');
-    modalElement.focus();
-  }
-
-  function restoreFocus() {
-    if (invoker && typeof invoker.focus === 'function') {
-      invoker.focus();
-    }
-  }
-
-  function trapFocus() {
-    // Phase 2a: minimal trap
-    // TODO: If multiple focusable elements are added,
-    // implement full Tab/Shift+Tab cycling.
   }
 
   function removeBackdrop() {
@@ -97,8 +66,77 @@ export default function ModalController({ modalElement, onClose }) {
     }
   }
 
+  // ARIA attributes
+  function applyAria() {
+    modalElement.setAttribute('role', 'dialog');
+    modalElement.setAttribute('aria-modal', 'true');
+    document.body.classList.add('modal-open'); // prevent background scroll
+  }
+
+  function restoreAria() {
+    modalElement.removeAttribute('aria-modal');
+    document.body.classList.remove('modal-open');
+  }
+
+  // Focus management
+  function focusFirstElement() {
+    const focusable = getFocusableElements();
+    if (focusable.length) {
+      focusable[0].focus();
+    } else {
+      modalElement.setAttribute('tabindex', '-1');
+      modalElement.focus();
+    }
+  }
+
+  function restoreFocus() {
+    if (invoker && typeof invoker.focus === 'function') {
+      invoker.focus();
+    }
+  }
+
+  // Keyboard handling
+  function registerKeyboard() {
+    keydownHandler = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        deactivate();
+      } else if (e.key === 'Tab') {
+        handleTab(e);
+      }
+    };
+    document.addEventListener('keydown', keydownHandler);
+  }
+
+  function removeKeyboard() {
+    document.removeEventListener('keydown', keydownHandler);
+  }
+
+  // Focus trap for Tab / Shift+Tab
+  function handleTab(e) {
+    const focusable = getFocusableElements();
+    if (!focusable.length) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  // Placeholder in case modal needs enhanced focus handling
+  function trapFocus() {
+    // TODO: If modal has dynamically added elements while open,
+    // consider using MutationObserver to update focusable elements list
+  }
+
   return {
     activate,
-    deactivate
+    deactivate,
   };
 }
