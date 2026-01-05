@@ -1,4 +1,4 @@
-import JobDataService from '../src/data/JobDataService';
+import JobsDataService from '../src/data/JobsDataService';
 
 test('returns jobs from http client', async () => {
     const fakeJobs = [{ id: 1, position: 'Developer' }];
@@ -7,9 +7,9 @@ test('returns jobs from http client', async () => {
         get: jest.fn().mockResolvedValue(fakeJobs)
     };
 
-    const service = JobDataService(mockHttp, '/fake/url');
+    const service = JobsDataService(mockHttp, '/fake/url');
     const result = await service.getAll();
 
     expect(mockHttp.get).toHaveBeenCalled();
-    expect(result).toEqual(fakeJobs);
+    expect(result[0].raw).toBe(fakeJobs[0]);
 });
