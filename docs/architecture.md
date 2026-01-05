@@ -1,5 +1,14 @@
 # Architecture & Design Rationale
 
+## Module Development & Testing
+
+To keep the architecture documentation focused and readable, module-specific conventions, dependency injection guidance, and unit testing best practices are maintained in a separate file.
+
+For detailed standards, conventions, and Jest test templates for UI modules, see the dedicated guidelines document:  
+[Developer Guidelines](developer-guidelines.md)
+
+---
+
 ## Purpose
 
 This document captures the **architectural decisions and guiding principles**
@@ -11,7 +20,7 @@ It is intentionally **not**:
 - A SharePoint deployment manual
 - A file-by-file walkthrough
 
-Those concerns are covered in the README.
+Those concerns are covered in the [README](../README.md).
 
 This document exists to explain **why the code is structured the way it is**
 and to preserve the reasoning behind decisions that may not be obvious from
