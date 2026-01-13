@@ -2,16 +2,12 @@
   "name": "sp-jobs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "copy-assets": "node scripts/copy-assets.js",
     "build": "rollup -c && npm run copy-assets",
     "build:preview": "cross-env BUILD=preview rollup -c && npm run copy-assets",
     "test": "jest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
     "@babel/core": "^7.28.5",
